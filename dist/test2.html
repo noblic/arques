@@ -1,0 +1,31 @@
+<script src="arques.1.0.15.js"></script>
+<style>
+  .myBtn {
+    background-color: #ddd;
+    width: 100px;
+    height: 70px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+</style>
+
+<div id="check1">first check</div>
+
+<div id="check2"
+check-ty="5"
+check-mr="1"
+check-size="20"
+check-color="red">
+<span style="color:blue;">first check</span>
+</div>
+
+<script>
+  ar.scope.on('inited', function() { // will be called when html is loaded completely and it's compiled by Arques  
+    var a = Check('check1');
+    var b = Check('check2');
+    
+    a.onClick = function() {
+	    ar.log(a.checked);
+    };
+  });
+</script>

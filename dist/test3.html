@@ -1,0 +1,29 @@
+<script src="arques.1.0.15.js"></script>
+<style>
+  .myBtn {
+    background-color: #ddd;
+    width: 100px;
+    height: 70px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+</style>
+
+<div id="radio1" 
+radio-color="#777"
+style="font-size:14px;">
+	<div>option 1</div>
+	<div>option 2</div>
+	<div>option 3</div>
+	<div>option 4</div>
+</div>
+
+<script>
+  ar.scope.on('inited', function() { // will be called when html is loaded completely and it's compiled by Arques  
+    var a = Radio('radio1');
+    
+    a.onClick = function() {
+	    ar.log(a.checked);
+    };
+  });
+</script>

@@ -1,0 +1,33 @@
+{
+  "tags": {
+    "allowUnknownTags": false
+  },
+  "plugins": [
+    "plugins/markdown"
+  ], 
+  "opts": {
+    "template": "/usr/local/lib/node_modules/tui-jsdoc-template", 
+    "encoding": "utf8",
+    "destination": "./out", 
+    "recurse": true,
+    "verbose": true,
+    "sort-keys": "off",
+    "sort-vars": "off"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "logo": {
+        "url": "https://www.noblic.com/arques/home/img/arqueslogo.png",
+        "width": "168px",
+        "height": "60px",
+        "link": "/arques"
+    },
+    "footer": {
+    },
+    "default": {
+      "outputSourceFiles": false
+    }
+  },
+	"sort": false
+}
