@@ -20,7 +20,7 @@ Arques engine is designed and coded based on the philosophy of simplism. Arques 
 
 For veterans, I believe you'd better see just the sample codes without explanation. Since Arques is intuitive, it's very easy to understand and it will save your time. You can go straight to the sample list.
 
-- <h4><a href="/arques/samples/" target="newnew">Samples</a></h4>
+- <h4><a href="https://www.noblic.com/arques/samples/" target="newnew">Samples</a></h4>
 <br>
 
 ## Description
@@ -908,7 +908,7 @@ Arques has many abbreviated properties for convenience. You can get or set the p
 
 You can see graphical/animation samples at here about the above methods:
 
-<a href="/arques/samples/" target="newnew">Samples</a>
+<a href="https://www.noblic.com/arques/samples/" target="newnew">Samples</a>
 <br>
 <br>
 ### < Singletons >
