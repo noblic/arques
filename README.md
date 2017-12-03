@@ -1,5 +1,5 @@
 <img src="http://www.noblic.com/img/arques/arqueslogo.png" width="200"/>
-============
+============<br>
 By Andy Remi (andy@noblic.com)<br>
 Version 1.0<br>
 <br>
