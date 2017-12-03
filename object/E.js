@@ -2344,6 +2344,142 @@ Object.defineProperty(ArquesElement.prototype, 'bdb', {
 });
 
 /**
+ * @member {string} bdrd
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border radius (bdrd = (b)or(d)er + (r)a(d)ius).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdrd', {
+	get : function() {
+		var r = this.style({
+			field : 'borderRadius',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderRadius',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {string} bdrdLT
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border radius of left top corner (bdrdLT = (b)or(d)er + (r)a(d)ius + (L)eft + (T)op).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdrdLT', {
+	get : function() {
+		var r = this.style({
+			field : 'borderTopLeftRadius',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderTopLeftRadius',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {string} bdrdRT
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border radius of right top corner (bdrdRT = (b)or(d)er + (r)a(d)ius + (R)ight + (T)op).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdrdRT', {
+	get : function() {
+		var r = this.style({
+			field : 'borderTopRightRadius',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderTopRightRadius',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {string} bdrdLB
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border radius of left bottom corner (bdrdLB = (b)or(d)er + (r)a(d)ius + (L)eft + (B)ottom).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdrdLB', {
+	get : function() {
+		var r = this.style({
+			field : 'borderBottomLeftRadius',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderBottomLeftRadius',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+
+/**
+ * @member {string} bdrdRB
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border radius of right bottom corner (bdrdRB = (b)or(d)er + (r)a(d)ius + (R)ight + (B)ottom).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdrdRB', {
+	get : function() {
+		var r = this.style({
+			field : 'borderBottomRightRadius',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderBottomRightRadius',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
  * @member {integer|string} lh
  * @memberOf ArquesElement.prototype
  * @desc [Get/Set] line height (lh = (l)ine + (h)eight).

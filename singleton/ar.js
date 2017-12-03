@@ -742,11 +742,10 @@ ar.init = function() {
 						document.body.appendChild(ar._logbox);
 						ar.logbox = E(ar._logbox);
 						ar.logbox.enabled = false;
-						ar.logbox[0].style.boxSizing = 'content-box';
 						ar.logbox.btn = Button('<div text="Copy"></div>');
 						ar.logbox.btn.w = 80;
 						ar.logbox.btn.h = 30;
-						ar.logbox.btn.mb = 5;
+						ar.logbox.btn.mb = 3;
 						ar.logbox.btn.bc = '#eee';
 						ar.logbox.btn.fc = 'black';
 						ar.logbox.btn.border = '1px solid #ccf';
@@ -767,7 +766,7 @@ ar.init = function() {
 						ar.logbox.out.padding = 10;
 						ar.logbox.out.bc = 'rgba(0,0,0,0.5)';
 						ar.logbox.out.w = 'calc(100%)';
-						ar.logbox.out.h = 'calc(100% - 30px - 5px)';
+						ar.logbox.out.h = 'calc(100% - 30px - 4px)';
 						ar.logbox.out.lh = '16px';
 						ar.logbox.out.oy = 'scroll';
 						ar.logbox.out.sizing = 'border-box';
