@@ -21,7 +21,7 @@ ArquesRadiobox = function(id) {
 	ArquesElement.call(This, id);
 
 	This.scope = Scope(This[0]);
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = This.attr('index') ? parseInt(This.attr('index')) : 0;
 	This._radio_size = This.attr('radio-size') ? This.attr('radio-size') : 25;
 	This._radio_color = This.attr('radio-color') ? This.attr('radio-color') : 'black';
@@ -130,7 +130,7 @@ ArquesRadiobox.prototype = Object.create(ArquesElement.prototype, {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';
-			This.filter = 'brightness(.78)';
+			This.filter = 'brightness(.5)';
 		}
 	},
 });
@@ -143,7 +143,7 @@ Object.defineProperty(ArquesRadiobox.prototype, 'index', {
 
 	set : function(v) {
 		var This = this;
-		This._index = Math.max(0, Math.min(This._radio.length - 1, v));
+		This._index = Math.max(0, Math.min(This._radios.length - 1, v));
 		This.refresh();
 	},
 });

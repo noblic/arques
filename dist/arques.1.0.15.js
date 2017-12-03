@@ -981,7 +981,7 @@ Object.defineProperty(ArquesElement.prototype, 'w', {
 			isToUseClientRect : true,
 			returnType : 'int',
 		});
-
+		
 		if (This._onSetW)
 			This._onSetW(r);
 
@@ -1008,6 +1008,7 @@ Object.defineProperty(ArquesElement.prototype, 'h', {
 
 	set : function(v) {
 		//ar.log(v);
+		
 		var This = this;
 		var r = This.style({
 			field : 'height',
@@ -2233,10 +2234,18 @@ Object.defineProperty(ArquesElement.prototype, 'pb', {
 
 Object.defineProperty(ArquesElement.prototype, 'sl', {
 	get : function() {
+		if (This._isWindow)
+			return window.scrollX;
+		
 		return this[0] ? this[0].scrollLeft : 0;
 	},
 
 	set : function(v) {
+		if (This._isWindow) {
+			ar.log('window.scrollX is read only.');
+			return this.sl;
+		}
+		
 		if (v != undefined)
 			for (var i = 0; i < this.length; i++)
 				this[i].scrollLeft = v;
@@ -2253,10 +2262,18 @@ Object.defineProperty(ArquesElement.prototype, 'sl', {
 
 Object.defineProperty(ArquesElement.prototype, 'st', {
 	get : function() {
+		if (This._isWindow)
+			return window.scrollY;
+		
 		return this[0] ? this[0].scrollTop : 0;
 	},
 
 	set : function(v) {
+		if (This._isWindow) {
+			ar.log('window.scrollY is read only.');
+			return this.st;
+		}
+		
 		if (v != undefined)
 			for (var i = 0; i < this.length; i++)
 				this[i].scrollTop = v;
@@ -5414,8 +5431,8 @@ ar.css.init = function() {
 
 	// Splitter
 	
+	ar.css._css_ += '.ar-split-box { white-space:nowrap;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-bar { background-color:#ddd; box-shadow:inset 0px 0px 0px 1px #bbb; }';
-	ar.css._css_ += '.ar-split-box { white-space:nowrap;width:100%;height:100%;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-col { display:inline-block;height:100%;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-row { width:100%;overflow:hidden; }';
 
@@ -7770,7 +7787,7 @@ ArquesCheckbox.prototype = Object.create(ArquesElement.prototype, {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';
-			This.filter = 'brightness(.78)';
+			This.filter = 'brightness(.5)';
 		}
 	},
 });
@@ -8138,7 +8155,7 @@ ArquesGallery = function(id) {
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id');
 
 	This._index = 0;
 	This._isAuto = false;
@@ -8759,7 +8776,7 @@ ArquesMenu = function(id) {
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = 0;
 	This._menus = [];
 	This.header = null;
@@ -9187,7 +9204,7 @@ ArquesPages = function(id) {
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = 0;
 	This._canAni = true;
 	This.overflow = 'hidden';
@@ -9355,7 +9372,7 @@ ArquesRadiobox = function(id) {
 	ArquesElement.call(This, id);
 
 	This.scope = Scope(This[0]);
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = This.attr('index') ? parseInt(This.attr('index')) : 0;
 	This._radio_size = This.attr('radio-size') ? This.attr('radio-size') : 25;
 	This._radio_color = This.attr('radio-color') ? This.attr('radio-color') : 'black';
@@ -9464,7 +9481,7 @@ ArquesRadiobox.prototype = Object.create(ArquesElement.prototype, {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';
-			This.filter = 'brightness(.78)';
+			This.filter = 'brightness(.5)';
 		}
 	},
 });
@@ -9477,7 +9494,7 @@ Object.defineProperty(ArquesRadiobox.prototype, 'index', {
 
 	set : function(v) {
 		var This = this;
-		This._index = Math.max(0, Math.min(This._radio.length - 1, v));
+		This._index = Math.max(0, Math.min(This._radios.length - 1, v));
 		This.refresh();
 	},
 });
@@ -10554,62 +10571,105 @@ Scroll.prototype.stop = function() {
   License: CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/)
 */
 
-Split = function(id) {
-	var a = new ArquesSplitter(id);
-	return a;
+Split = function(id, opt) {
+	var con = E(id);
+	con.scanAll();
+	con.splitters = [];
+	
+	var chil = con.children;
+
+	if (chil.length <= 1) {
+		ar.log('To split one div, it must have more than one child.');
+		return con;
+	}
+
+	if (opt != ar.COL && opt != ar.ROW) {
+		ar.log('Please specify ar.COL or ar.ROW to the second paramter of Split().');
+		return con;
+	}
+
+	if (opt == ar.COL)
+		con.addCls('ar-split-box');
+
+	con.html = con.html.replace(/\>[\s\n]+\</g, '><');
+	con.scanAll();
+	var chil = con.children;
+	var prevSplitter = null;
+
+	for (var i = chil.length - 1; i > 0; i--) {
+		var link1 = chil[i - 1];
+		var link2 = chil[i];
+		var a = new ArquesSplitter('<div id="__ar_split_' + Split.splitIds + '"></div>', link1, link2, opt);
+		con.insert(i, a);
+		Split.splitIds++;
+		con.splitters.push(a);
+		
+		if (prevSplitter) {
+			prevSplitter.prev = a;
+			a.next = prevSplitter;
+		}
+		
+		prevSplitter = a;
+	}
+	
+	return con;
 }
 
+Split.splitIds = 0;
 Split.splits = [];
 
 //
 // ArquesSplitter
 //
 
-ArquesSplitter = function(id) {
+ArquesSplitter = function(id, link1, link2, opt) {
 	var This = this;
 
 	ArquesElement.call(This, id);
 
 	Split.splits.push(This);
 	This.scope = Scope(This[0]);
-	This._id = id;
+	This._id = This.attr('id');
+	This._type = opt;
 	This.onChanged = null;
 	This.isHorz = true;
 	This.isDn = false;
+	This.prev = null;
+	This.next = null;
 	This.link = [];
+	This.addCls('ar-split-bar');
+	This.scanAll();
+	This.posDn = {
+		x : 0,
+		y : 0
+	};
+	This.posMv = {
+		x : 0,
+		y : 0
+	};
 
-	for (var j = 0; j < Split.splits.length; j++)
-		Split.splits[j].makeLink(This);
+	//	for (var j = 0; j < Split.splits.length; j++)
+	//		Split.splits[j].makeLink(This);
+	//
+	//	This.makeLink();
 
-	This.makeLink();
-
-	if (This.attr('left')) {
-		var leftId = This.attr('left');
-		var rightId = This.attr('right');
-
-		if (ar.has(leftId) == false)
-			ar.log("ArquesSplitter: specified id for left isn't valid. The element doesn't exist.");
-
-		if (ar.has(rightId) == false)
-			ar.log("ArquesSplitter: specified id for right isn't valid. The element doesn't exist.");
-
-		This.L = E(leftId);
-		This.R = E(rightId);
+	if (This._type == ar.COL) {
+		This.L = link1;
+		This.R = link2;
+		This.L.addCls('ar-split-col');
+		This.R.addCls('ar-split-col');
+		This.addCls('ar-split-col');
+		This.w = 5;
 		This.cursor = 'col-resize';
 	}
-	else if (This.attr('top')) {
+	else {
 		This.isHorz = false;
-		var topId = This.attr('top');
-		var btmId = This.attr('bottom');
-
-		if (ar.has(topId) == false)
-			ar.log("ArquesSplitter: specified id for top isn't valid. The element doesn't exist.");
-
-		if (ar.has(btmId) == false)
-			ar.log("ArquesSplitter: specified id for bottom isn't valid. The element doesn't exist.");
-
-		This.T = E(topId);
-		This.B = E(btmId);
+		This.T = link1;
+		This.B = link2;
+		This.T.addCls('ar-split-row');
+		This.B.addCls('ar-split-row');
+		This.addCls('ar-split-row');
+		This.h = 5;
 		This.cursor = 'row-resize';
 	}
 
@@ -10634,81 +10694,85 @@ ArquesSplitter = function(id) {
 				This.link[i].onDn(e2, true);
 			}
 
-		This.Pw = This.parent.w;
-		This.Ph = This.parent.h;
+		This.Lmax = (This.next ? This.next.x - This.parent.x - (This.w + 1) : This.parent.w - This.w) - (This.prev ? This.prev.x - This.parent.x + This.prev.w : 0);
+		This.Tmax = (This.next ? This.next.y - This.parent.y - This.h : This.parent.h - This.h) - (This.prev ? This.prev.y - This.parent.y + This.prev.h : 0);
 
 		if (This.isHorz) {
 			This.Lw = This.L.frameMP.w;
-			This.Rw = This.R.frameMP.w;
 			This.Lminw = This.L.minw;
 			This.Rminw = This.R.minw;
 			This.Lmaxw = This.L.maxw;
 			This.Rmaxw = This.R.maxw;
+			This.Lmp = This.L.ml + This.L.mr + This.L.pl + This.L.pr;
+			This.Rmp = This.R.ml + This.R.mr + This.R.pl + This.R.pr;
 		}
 		else {
 			This.Th = This.T.frameMP.h;
-			This.Bh = This.B.frameMP.h;
 			This.Tminh = This.T.minh;
 			This.Bminh = This.B.minh;
 			This.Tmaxh = This.T.maxh;
-			This.Bmaxh = This.B.maxh;
+			This.Bmaxh = This.B.maxw;
+			This.Tmp = This.T.mt + This.T.mb + This.T.pt + This.T.pb;
+			This.Bmp = This.B.mt + This.B.mb + This.B.pt + This.B.pb;
 		}
 	};
 
 	win.on(ar.EV_DN, This.onDn, true);
 
-	win.on(ar.EV_MV, function(e) {
-		if (This.isDn == false)
-			return true;
-
+	This.onMv = function(e) {
 		This.posMv = ar.evPos(e);
 
 		if (This.isHorz) {
-			var w = This.w;
 			var diff = This.posMv.x - This.posDn.x;
 
-			This.L.w = Math.max(0, Math.min(This.Pw - w, This.Lw + diff)) - This.L.ml - This.L.mr - This.L.pl - This.L.pr;
-			
+			This.L.w = Math.max(0, Math.min(This.Lmax, This.Lw + diff)) - This.Lmp;
+
 			if (This.Lminw)
 				This.L.w = Math.max(This.L.w, This.Lminw);
 			if (This.Lmaxw)
 				This.L.w = Math.min(This.L.w, This.Lmaxw);
-			
-			This.R.w = Math.max(0, This.Pw - w - This.L.w) - This.R.ml - This.R.mr - This.R.pl - This.R.pr;
-			
+
+			This.R.w = Math.max(0, This.Lmax - This.L.w) - This.Rmp;
+
 			if (This.Rminw)
 				This.R.w = Math.max(This.R.w, This.Rminw);
 			if (This.Rmaxw)
 				This.R.w = Math.min(This.R.w, This.Rmaxw);
 		}
 		else {
-			var h = This.h;
 			var diff = This.posMv.y - This.posDn.y;
 
-			This.T.h = Math.max(0, Math.min(This.Ph - h - 1, This.Th + diff)) - This.T.mt - This.T.mb - This.T.pt - This.T.pb;
+			This.T.h = Math.max(0, Math.min(This.Tmax, This.Th + diff)) - This.Tmp;
 
 			if (This.Tminh)
 				This.T.h = Math.max(This.T.h, This.Tminh);
 			if (This.Tmaxh)
 				This.T.h = Math.min(This.T.h, This.Tmaxh);
 
-			This.B.h = Math.max(0, This.Ph - h - This.T.h) - This.B.mt - This.B.mb - This.B.pt - This.B.pb;
+			This.B.h = Math.max(0, This.Tmax - This.T.h) - This.Bmp;
 
 			if (This.Bminh)
 				This.B.h = Math.max(This.B.h, This.Bminh);
 			if (This.Bmaxh)
 				This.B.h = Math.min(This.B.h, This.Bmaxh);
 		}
-		
-		Scope.broadcast('size');
+	};
+
+	win.on(ar.EV_MV, function(e) {
+		if (This.isDn == false)
+			return true;
+
+		var r = This.onMv(e);
+		Scope.broadcast('size', This);
+		return r;
 	}, true);
 
 	win.on(ar.EV_UP, function(e) {
 		for (var i = 0; i < This.link.length; i++)
 			This.link[i].isDn = false;
 
+		Scope.broadcast('size', This);
 		This.isDn = false;
-		Scope.broadcast('size');
 		return true;
 	}, true);
 
@@ -10720,8 +10784,18 @@ ArquesSplitter = function(id) {
 	//			This.isDn = false;
 	//	}, true);
 
-	This.scope.on('size', function() {
-		This.refresh();
+	This.scope.on('size', function(param) {
+		if (This.isDn)
+			return;
+
+		if (param == undefined && This.next == null) { // only do when window size is changed
+			if (This.isHorz) {
+				This.R.w = This.parent.w - (This.x - This.parent.x) - This.w;
+			}
+			else {
+				This.B.h = This.parent.h - (This.y - This.parent.y) - This.h;
+			}
+		}
 	});
 
 	This._onSetW = function() {
@@ -10802,7 +10876,7 @@ ArquesTabs = function(id) {
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = 0;
 	This.onChanged = null;
 
@@ -11073,6 +11147,8 @@ ar.RIGHT = 'right';
 ar.TOP = 'top';
 ar.BOTTOM = 'bottom';
 ar.CENTER = 'center';
+ar.COL = 'col';
+ar.ROW = 'row';
 
 ar.evCnt = 0;
 ar.objCnt = 0;

@@ -111,7 +111,7 @@ ArquesCheckbox.prototype = Object.create(ArquesElement.prototype, {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';
-			This.filter = 'brightness(.78)';
+			This.filter = 'brightness(.5)';
 		}
 	},
 });

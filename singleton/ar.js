@@ -59,6 +59,8 @@ ar.RIGHT = 'right';
 ar.TOP = 'top';
 ar.BOTTOM = 'bottom';
 ar.CENTER = 'center';
+ar.COL = 'col';
+ar.ROW = 'row';
 
 ar.evCnt = 0;
 ar.objCnt = 0;

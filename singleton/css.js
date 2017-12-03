@@ -773,8 +773,8 @@ ar.css.init = function() {
 
 	// Splitter
 	
+	ar.css._css_ += '.ar-split-box { white-space:nowrap;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-bar { background-color:#ddd; box-shadow:inset 0px 0px 0px 1px #bbb; }';
-	ar.css._css_ += '.ar-split-box { white-space:nowrap;width:100%;height:100%;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-col { display:inline-block;height:100%;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-row { width:100%;overflow:hidden; }';
 

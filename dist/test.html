@@ -1,64 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<!--
-	Web Page Template by Arques Engine
-	Author: Andy Remi (andy@noblic.com) 
-
-  Copyrightⓒ 2012-2018 Noblic, Inc. All rights reserved.
-  License: MIT
-  The graphics design of this web site is based on http://www.free-css.com/free-css-templates/page217/megakit
--->
-<head>
-  <title>Noblic Inc</title>
-  <meta charset="UTF-8">
-  <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-
-	<script src="arques.1.0.15.js"></script>
-</head>
-
+<script src="arques.1.0.15.js"></script>
 <style>
-html, body {
-	width:100%;
-	height:100%;
-	padding:0;
-	margin:0;
-}
+  #box1 {
+    width: 100%;
+    height: 400px;
+    border: 1px solid #ddd;
+  }
 </style>
 
-<div class="ar-split-box">
-	<div class="ar-split-col d1" style="width:300px;padding:10px;">
-	</div><div class="ar-split-col ar-split-bar s" style="width:5px;" left="d1" right="d2">
-	</div><div class="ar-split-col d2" style="width:calc(100% - 300px - 5px);padding:10px;">
-		<div class="ar-split-row d21" style="height:300px;">
-			<div class="ar-split-col d211" style="width:300px;">
-			</div><div class="ar-split-col ar-split-bar v1" style="width:5px;" left="d211" right="d212" link="v2">
-			</div><div class="ar-split-col d212" style="width:calc(100% - 300px - 5px);"></div>
-		</div><div class="ar-split-row ar-split-bar v" style="height:5px;" top="d21" bottom="d22">
-		</div><div class="ar-split-row d22" style="height:calc(100% - 300px - 5px);">
-			<div class="ar-split-col d221" style="width:300px;">
-			</div><div class="ar-split-col ar-split-bar v2" style="width:5px;" left="d221" right="d222" link="v1">
-			</div><div class="ar-split-col d222" style="width:calc(100% - 300px - 5px);"></div>
-		</div>
-	</div>
+<div id="box1">
+  <div style="width:200px;">aaa</div>
+  <div id="box2">
+    <div id="box3" style="height:100px;">
+      <div style="width:100px;">
+      bbb
+      </div>
+      <div>
+      ccc
+      </div>
+    </div>
+    <div id="box4" style="height:calc(100% - 150px);">
+      <div style="width:100px;">
+      ddd
+      </div>
+      <div style="width:100px;">
+      eee
+      </div>
+    </div>
+    <div id="box5" style="height:50px;">
+    </div>
+  </div>
+  <div style="width:100px;background-color:red;">zzz</div>
 </div>
 
 <script>
-	ar.scope.on('inited', function() {
-		s = Split('s');	
-		v = Split('v');	
-		v1 = Split('v1');	
-		v2 = Split('v2');	
-	});
-
-	ar.scope.on('size', function() {
-		var d1 = E('d1');
-		var d2 = E('d2');
-		
-		if (ar.w < d1.w) 
-			d1.w = ar.w - 6;
-
-		d2.w = 'calc(100% - ' + d1.w + 'px - 5px)';
-	});
+  ar.scope.on('inited', function() { // will be called when html is loaded completely and it's compiled by Arques  
+    var box1 = Split('box1', ar.COL);
+    var box2 = Split('box2', ar.ROW);
+    var box3 = Split('box3', ar.COL);
+    var box4 = Split('box4', ar.COL);
+    // ar.ROW divides children as rows. 
+    // Vertical splitter bars will be appeared between box1's chlidren. 
+    // box1.splitters array has all splitters in box1
+    // ex) box1.splitters[0].bc = 'red';
+  });
 </script>
-
-</html>

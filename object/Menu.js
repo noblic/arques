@@ -23,7 +23,7 @@ ArquesMenu = function(id) {
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id');
 	This._index = 0;
 	This._menus = [];
 	This.header = null;

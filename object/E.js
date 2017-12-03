@@ -980,7 +980,7 @@ Object.defineProperty(ArquesElement.prototype, 'w', {
 			isToUseClientRect : true,
 			returnType : 'int',
 		});
-
+		
 		if (This._onSetW)
 			This._onSetW(r);
 
@@ -1007,6 +1007,7 @@ Object.defineProperty(ArquesElement.prototype, 'h', {
 
 	set : function(v) {
 		//ar.log(v);
+		
 		var This = this;
 		var r = This.style({
 			field : 'height',
@@ -2232,10 +2233,18 @@ Object.defineProperty(ArquesElement.prototype, 'pb', {
 
 Object.defineProperty(ArquesElement.prototype, 'sl', {
 	get : function() {
+		if (This._isWindow)
+			return window.scrollX;
+		
 		return this[0] ? this[0].scrollLeft : 0;
 	},
 
 	set : function(v) {
+		if (This._isWindow) {
+			ar.log('window.scrollX is read only.');
+			return this.sl;
+		}
+		
 		if (v != undefined)
 			for (var i = 0; i < this.length; i++)
 				this[i].scrollLeft = v;
@@ -2252,10 +2261,18 @@ Object.defineProperty(ArquesElement.prototype, 'sl', {
 
 Object.defineProperty(ArquesElement.prototype, 'st', {
 	get : function() {
+		if (This._isWindow)
+			return window.scrollY;
+		
 		return this[0] ? this[0].scrollTop : 0;
 	},
 
 	set : function(v) {
+		if (This._isWindow) {
+			ar.log('window.scrollY is read only.');
+			return this.st;
+		}
+		
 		if (v != undefined)
 			for (var i = 0; i < this.length; i++)
 				this[i].scrollTop = v;
