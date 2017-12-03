@@ -770,7 +770,7 @@ ar.init = function() {
 						ar.logbox.out.h = 'calc(100% - 30px - 5px)';
 						ar.logbox.out.lh = '16px';
 						ar.logbox.out.oy = 'scroll';
-						ar.logbox.out[0].style.boxSizing = 'content-box';
+						ar.logbox.out.sizing = 'border-box';
 						ar.logbox.add(ar.logbox.btn);
 						ar.logbox.add(ar.logbox.out);
 

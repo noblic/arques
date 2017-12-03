@@ -2104,7 +2104,7 @@ Object.defineProperty(ArquesElement.prototype, 'padding', {
 /**
  * @member {integer|string} pl
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] padding left.
+ * @desc [Get/Set] padding left (pl = (p)adding + (l)eft).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'pl', {
@@ -2131,7 +2131,7 @@ Object.defineProperty(ArquesElement.prototype, 'pl', {
 /**
  * @member {integer|string} pt
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] padding top.
+ * @desc [Get/Set] padding top (pt = (p)adding + (t)op).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'pt', {
@@ -2158,7 +2158,7 @@ Object.defineProperty(ArquesElement.prototype, 'pt', {
 /**
  * @member {integer|string} pr
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] padding right.
+ * @desc [Get/Set] padding right (pr = (p)adding + (r)ight).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'pr', {
@@ -2185,7 +2185,7 @@ Object.defineProperty(ArquesElement.prototype, 'pr', {
 /**
  * @member {integer|string} pb
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] padding bottom.
+ * @desc [Get/Set] padding bottom (pb = (p)adding + (b)ottom).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'pb', {
@@ -2239,7 +2239,7 @@ Object.defineProperty(ArquesElement.prototype, 'border', {
 /**
  * @member {integer|string} bdl
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] border left (border(bd) + left(l)).
+ * @desc [Get/Set] border left ((bdl = (b)or(d)er + (l)eft)).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bdl', {
@@ -2266,7 +2266,7 @@ Object.defineProperty(ArquesElement.prototype, 'bdl', {
 /**
  * @member {integer|string} bdt
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] border top (border(bd) + top(t)).
+ * @desc [Get/Set] border top (bdt = (b)or(d)er + (t)op).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bdt', {
@@ -2293,7 +2293,7 @@ Object.defineProperty(ArquesElement.prototype, 'bdt', {
 /**
  * @member {integer|string} bdr
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] border right (border(bd) + right(r)).
+ * @desc [Get/Set] border right (bdr = (b)or(d)er + (r)ight).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bdr', {
@@ -2347,7 +2347,7 @@ Object.defineProperty(ArquesElement.prototype, 'bdb', {
 /**
  * @member {integer|string} lh
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] line height (line(l) + height(h)).
+ * @desc [Get/Set] line height (lh = (l)ine + (h)eight).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'lh', {
@@ -2371,6 +2371,33 @@ Object.defineProperty(ArquesElement.prototype, 'lh', {
 	}
 });
 
+/**
+ * @member {string} sizing
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] box-sizing.
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'sizing', {
+	get : function() {
+		var r = this.style({
+			field : 'boxSizing',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'boxSizing',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
 //
 //
 //
@@ -2383,7 +2410,7 @@ Object.defineProperty(ArquesElement.prototype, 'lh', {
 /**
  * @member {integer} sl
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] scroll left.
+ * @desc [Get/Set] scroll left (sl = (s)croll (l)eft).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'sl', {
@@ -2411,7 +2438,7 @@ Object.defineProperty(ArquesElement.prototype, 'sl', {
 /**
  * @member {integer} st
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] scroll top.
+ * @desc [Get/Set] scroll top (st = (s)croll (t)op).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'st', {
@@ -2439,7 +2466,7 @@ Object.defineProperty(ArquesElement.prototype, 'st', {
 /**
  * @member {integer} sw
  * @memberOf ArquesElement.prototype
- * @desc [Get] scroll width.
+ * @desc [Get] scroll width (sw = (s)croll (w)idth).
  * @readonly
  */
 
@@ -2456,7 +2483,7 @@ Object.defineProperty(ArquesElement.prototype, 'sw', {
 /**
  * @member {integer} sh
  * @memberOf ArquesElement.prototype
- * @desc [Get] scroll height.
+ * @desc [Get] scroll height (sh = (s)croll (h)eight).
  * @readonly
  */
 
@@ -2472,8 +2499,8 @@ Object.defineProperty(ArquesElement.prototype, 'sh', {
 
 /**
  * @method ArquesElement.prototype.se
- * @desc Scroll to the end.
  * @param {boolean} isHorizontal
+ * @desc Scroll to the end(scroll(s) to the end(e)).
  */
 
 ArquesElement.prototype.se = function(isHorizontal) { // scroll to the end
@@ -2509,7 +2536,7 @@ Object.defineProperty(ArquesElement.prototype, 'onScroll', {
 /**
  * @member {integer} ot
  * @memberOf ArquesElement.prototype
- * @desc [Get] offset top.
+ * @desc [Get] offset top (ot = (o)ffset (t)op).
  * @readonly
  */
 
@@ -2526,7 +2553,7 @@ Object.defineProperty(ArquesElement.prototype, 'ot', {
 /**
  * @member {integer} ol
  * @memberOf ArquesElement.prototype
- * @desc [Get] offset left.
+ * @desc [Get] offset left (ol = (o)ffset (l)eft).
  * @readonly
  */
 
@@ -2543,7 +2570,7 @@ Object.defineProperty(ArquesElement.prototype, 'ol', {
 /**
  * @member {integer} ow
  * @memberOf ArquesElement.prototype
- * @desc [Get] offset width.
+ * @desc [Get] offset width (ow = (o)ffset (w)idth).
  * @readonly
  */
 
@@ -2560,7 +2587,7 @@ Object.defineProperty(ArquesElement.prototype, 'ow', {
 /**
  * @member {integer} oh
  * @memberOf ArquesElement.prototype
- * @desc [Get] offset height.
+ * @desc [Get] offset height (oh = (o)ffset (h)eight).
  * @readonly
  */
 
@@ -2835,7 +2862,7 @@ Object.defineProperty(ArquesElement.prototype, 'background', {
 /**
  * @member {string} bi
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] background image.
+ * @desc [Get/Set] background image (bi = (b)ackground (i)mage).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bi', {
@@ -2858,7 +2885,7 @@ Object.defineProperty(ArquesElement.prototype, 'bi', {
 /**
  * @member {string} bs
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] background size.
+ * @desc [Get/Set] background size (bs = (b)ackground (s)ize).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bs', {
@@ -2881,7 +2908,7 @@ Object.defineProperty(ArquesElement.prototype, 'bs', {
 /**
  * @member {string} bc
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] background color.
+ * @desc [Get/Set] background color (bc = (b)ackground (c)olor).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'bc', {
@@ -2965,7 +2992,7 @@ Object.defineProperty(ArquesElement.prototype, 'alpha', {
 /**
  * @member {string} fc
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] font color.
+ * @desc [Get/Set] font color (fc = (f)ont (c)olor).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'fc', {
@@ -2988,7 +3015,7 @@ Object.defineProperty(ArquesElement.prototype, 'fc', {
 /**
  * @member {integer} fs
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] font size.
+ * @desc [Get/Set] font size (fs = (f)ont (s)ize).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'fs', {
@@ -3015,7 +3042,7 @@ Object.defineProperty(ArquesElement.prototype, 'fs', {
 /**
  * @member {string} ff
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] font family.
+ * @desc [Get/Set] font family (ff = (f)ont (f)amily).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'ff', {
@@ -3038,7 +3065,7 @@ Object.defineProperty(ArquesElement.prototype, 'ff', {
 /**
  * @member {string} fw
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] font weight.
+ * @desc [Get/Set] font weight (fw = (f)ont (w)eight).
  */
 
 Object.defineProperty(ArquesElement.prototype, 'fw', {
@@ -12049,11 +12076,11 @@ ar.init = function() {
 						ar.logbox.out = E('<div></div>');
 						ar.logbox.out.padding = 10;
 						ar.logbox.out.bc = 'rgba(0,0,0,0.5)';
-						ar.logbox.out.w = 'calc(100% - 20px)';
-						ar.logbox.out.h = 'calc(100% - 30px - 20px - 5px)';
+						ar.logbox.out.w = 'calc(100%)';
+						ar.logbox.out.h = 'calc(100% - 30px - 5px)';
 						ar.logbox.out.lh = '16px';
 						ar.logbox.out.oy = 'scroll';
-						ar.logbox.out[0].style.boxSizing = 'content-box';
+						ar.logbox.out.sizing = 'border-box';
 						ar.logbox.add(ar.logbox.btn);
 						ar.logbox.add(ar.logbox.out);
 
