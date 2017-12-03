@@ -10694,7 +10694,7 @@ ArquesSplitter = function(id, link1, link2, opt) {
 				This.link[i].onDn(e2, true);
 			}
 
-		This.Lmax = (This.next ? This.next.x - This.parent.x - (This.w + 1) : This.parent.w - This.w) - (This.prev ? This.prev.x - This.parent.x + This.prev.w : 0);
+		This.Lmax = (This.next ? This.next.x - This.parent.x - This.w : This.parent.w - This.w) - (This.prev ? This.prev.x - This.parent.x + This.prev.w : 0);
 		This.Tmax = (This.next ? This.next.y - This.parent.y - This.h : This.parent.h - This.h) - (This.prev ? This.prev.y - This.parent.y + This.prev.h : 0);
 
 		if (This.isHorz) {

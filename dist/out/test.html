@@ -1,6 +1,5 @@
 <script src="arques.1.0.15.js"></script>
 <style>
-
   #box1 {
     width: 100%;
     height: 400px;
@@ -10,35 +9,15 @@
 
 <div id="box1">
   <div style="width:200px;">aaa</div>
-  <div id="box2">
-    <div id="box3" style="height:100px;">
-      <div style="width:100px;">
-      bbb
-      </div>
-      <div>
-      ccc
-      </div>
-    </div>
-    <div id="box4" style="height:calc(100% - 150px);">
-      <div style="width:100px;">
-      ddd
-      </div>
-      <div style="width:100px;">
-      eee
-      </div>
-    </div>
-    <div id="box5" style="height:50px;">
-    </div>
-  </div>
-  <div style="width:100px;">zzz</div>
+  <div style="width:200px;">bbb</div>
+  <div style="width:200px;">aaa</div>
+  <div style="width:200px;">aaa</div>
+  <div style="width:200px;">aaa</div>
 </div>
 
 <script>
   ar.scope.on('inited', function() { // will be called when html is loaded completely and it's compiled by Arques  
     var box1 = Split('box1', ar.COL);
-    var box2 = Split('box2', ar.ROW);
-    var box3 = Split('box3', ar.COL);
-    var box4 = Split('box4', ar.COL);
     // ar.ROW divides children as rows. 
     // Vertical splitter bars will be appeared between box1's chlidren. 
     // box1.splitters array has all splitters in box1
