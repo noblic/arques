@@ -792,7 +792,7 @@ ar.init = function() {
 
 				var script = document.createElement('script');
 				script.src = ar._domain + '/' + ar._curLangUrl;
-				script.onload = compileDocImpl();
+				script.onload = compileDocImpl;
 				document.head.appendChild(script);
 			}
 			else
