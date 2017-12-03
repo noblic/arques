@@ -14,7 +14,7 @@ You must give appropriate credit, link to the license, indicate if changes were 
 ## Introduction
   
 Arques engine is designed and coded based on the philosophy of simplism. Arques aims to take mathematical simplicity. Many ideas of Arques have come from the great works of jQuery, AngularJS, Mustache and Animate.css. So Arques has many similar patterns to them. But Arques has no dependencies. You don't need jQuery, AngularJS nor Mustache when you use Arques. You don't need to include even Animate.css. Arques is containing it. So call it by &lt;script src="arques.js"&gt; and just use it. That's it. 
-And you can still use the other 3rd party frameworks like jQuery without any collision. Beside, Arques Engine supports NodeJS too!
+And you can still use the other 3rd party frameworks like jQuery without any collision. Besides, Arques Engine supports NodeJS too!
 <br>
 
 ## Samples
