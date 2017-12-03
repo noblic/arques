@@ -16,14 +16,17 @@ Pages = function(id) {
 	return a;
 }
 
+Pages._objIndex = 0;
+
 ArquesPages = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Pages._objIndex++;
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_pages_' + Pages._objIndex;
 	This._index = 0;
 	This._canAni = true;
 	This.overflow = 'hidden';
@@ -97,7 +100,7 @@ ArquesPages.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 
 			if (This.con.count == 0)

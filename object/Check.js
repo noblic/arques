@@ -16,13 +16,16 @@ Check = function(id) {
 	return a;
 }
 
+Check._objIndex = 0;
+
 ArquesCheckbox = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Check._objIndex++;
 
 	This.scope = Scope(This[0]);
-	This._id = id;
+	This._id = This.attr('id') ? This.attr('id') : '__arques_check_' + Check._objIndex;
 	This._isChecked = This.attr('checked') ? true : false;
 	This._check_size = This.attr('check-size') ? This.attr('check-size') : 25;
 	This._check_color = This.attr('check-color')  ? This.attr('check-color') : 'black';
@@ -85,7 +88,7 @@ ArquesCheckbox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			ar.setIcon(This.check, This._isChecked ? 'check_box' : 'check_box_outline_blank' , This._check_size, 'fill:' + This._check_color + ';');
 		}
@@ -95,7 +98,7 @@ ArquesCheckbox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = true;
 			This.cursor = 'pointer';
@@ -107,7 +110,7 @@ ArquesCheckbox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';

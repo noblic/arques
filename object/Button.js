@@ -10,26 +10,30 @@
 //
 // ArquesButton
 //
+
 Button = function(id) {
 	var a = new ArquesButton(id);
 	return a;
 }
 
+Button._objIndex = 0;
+
 ArquesButton = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
-	This.computeStyle();
+	Button._objIndex++;
 
+	This.computeStyle();
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = id;
+	This._id = This.attr('id') ? This.attr('id') : '__arques_btn_' + Button._objIndex;
 	This._theme = This.attr('theme');
 	This._text = This.attr('text');
 	This._textTx = This.attr('text-tx') ? parseInt(This.attr('text-tx')) : 0;
 	This._textTy = This.attr('text-ty') ? parseInt(This.attr('text-ty')) : 0;
 	This._textColor = This.attr('text-color');
-	This._textSize = This.attr('text-size');
+	This._textSize = This.attr('text-size') ? This.attr('text-size') : 12;
 	This._textFont = This.attr('text-font');
 	This._textWeight = This.attr('text-weight');
 	This._textFilter = This.attr('text-filter');
@@ -61,21 +65,21 @@ ArquesButton = function(id) {
 	var html = '';
 
 	html += '<center>';
-	html += '<table id="' + id + '__table" style="user-select:none;">';
+	html += '<table id="' + This._id + '__table" style="user-select:none;">';
 
 	if (This._isUnder)
 		html += '<tr>';
 
 	if (This._img)
-		html += '  <td id="' + id + '__img"></td>';
+		html += '  <td id="' + This._id + '__img"></td>';
 	else
-		html += '  <td id="' + id + '__icon"></td>';
+		html += '  <td id="' + This._id + '__icon"></td>';
 
 	if (This._isUnder)
 		html += '</tr><tr>';
 
 	if (This._text)
-		html += '  <td id="' + id + '__text"></td>';
+		html += '  <td id="' + This._id + '__text"></td>';
 
 	if (This._isUnder)
 		html += '</tr>';
@@ -88,7 +92,7 @@ ArquesButton = function(id) {
 	This.con.scanAll();
 	ArquesElement.prototype.add.call(This, This.con);
 
-	This.table = This.con.E(id + '__table');
+	This.table = This.con.E(This._id + '__table');
 	This.table.alignX = ar.CENTER;
 	This.table.fc = This.fc;
 	This.table.fs = This.fs;
@@ -102,20 +106,20 @@ ArquesButton = function(id) {
 		pic.w = This._imgW;
 		pic.h = This._imgH;
 
-		This.picTd = This.con.E(id + '__img');
+		This.picTd = This.con.E(This._id + '__img');
 		This.picTd.tx = imgTx;
 		This.picTd.ty = imgTy;
 		This.picTd.add(pic);
 	}
 	else {
-		This.picTd = This.con.E(id + '__icon');
+		This.picTd = This.con.E(This._id + '__icon');
 		This.picTd.tx = iconTx;
 		This.picTd.ty = iconTy;
 		This.picTd.html = This._icon;
 	}
 
 	This.pic = This.picTd.children[0];
-	This.textTd = This.con.E(id + '__text');
+	This.textTd = This.con.E(This._id + '__text');
 	This.textTd.html = This._text;
 	This.textTd.tx = textTx;
 	This.textTd.ty = textTy;
@@ -174,7 +178,7 @@ ArquesButton.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This.table.h = This.h;
 		}
@@ -184,7 +188,7 @@ ArquesButton.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = true;
 			This.cursor = 'pointer';
@@ -196,7 +200,7 @@ ArquesButton.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';

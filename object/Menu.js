@@ -12,6 +12,8 @@ Menu = function(id) {
 	return a;
 }
 
+Menu._objIndex = 0;
+
 //
 // ArquesMenu
 //
@@ -20,10 +22,11 @@ ArquesMenu = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Menu._objIndex++;
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_menu_' + Menu._objIndex;
 	This._index = 0;
 	This._menus = [];
 	This.header = null;
@@ -185,7 +188,7 @@ ArquesMenu.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 
 			if (This.menuCon.count == 0)

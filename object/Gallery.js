@@ -15,13 +15,16 @@ Gallery = function(id) {
 	return a;
 }
 
+Gallery._objIndex = 0;
+
 ArquesGallery = function(id) {
 	var This = this;
 	ArquesElement.call(This, id);
+	Gallery._objIndex++;
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_gallery_' + Gallery._objIndex;
 
 	This._index = 0;
 	This._isAuto = false;

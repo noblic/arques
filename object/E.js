@@ -247,11 +247,10 @@ ArquesElement.prototype.style = function(param) {
 }
 
 ArquesElement.prototype.computeStyle = function() {
-	var This = this;
 	var isMatrixSet = false;
 
-	for (var i = 0; i < This.length; i++) {
-		var e = This[i];
+	for (var i = 0; i < this.length; i++) {
+		var e = this[i];
 		var style = window.getComputedStyle(e);
 
 		//			for ( var k in style) {
@@ -341,12 +340,12 @@ ArquesElement.prototype.computeStyle = function() {
 			try {
 				var m = ar.matrix.parse(style['transform']);
 				//ar.log(m);
-				This._scaleX = Math.sqrt(m[0] * m[0] + m[2] * m[2]);
-				This._scaleY = Math.sqrt(m[1] * m[0] + m[3] * m[3]);
-				This._tx = parseFloat(m[4]);
-				This._ty = parseFloat(m[5]);
-				This._degree = Math.atan(m[2] / m[3]) * 180;
-				This._degree /= Math.PI;
+				this._scaleX = Math.sqrt(m[0] * m[0] + m[2] * m[2]);
+				this._scaleY = Math.sqrt(m[1] * m[0] + m[3] * m[3]);
+				this._tx = parseFloat(m[4]);
+				this._ty = parseFloat(m[5]);
+				this._degree = Math.atan(m[2] / m[3]) * 180;
+				this._degree /= Math.PI;
 				isMatrixSet = true;
 			}
 			catch (e) {
@@ -373,12 +372,11 @@ ArquesElement.prototype.computeStyle = function() {
  */
 
 ArquesElement.prototype.free = function() {
-	var This = this;
-	var parent = This.parent;
-	var chil = This._children;
+	var parent = this.parent;
+	var chil = this._children;
 
-	for (var i = 0; i < This.length; i++) {
-		var a = This[i]._seenTag;
+	for (var i = 0; i < this.length; i++) {
+		var a = this[i]._seenTag;
 
 		if (a)
 			delete ar._onSeenList[a];
@@ -388,12 +386,12 @@ ArquesElement.prototype.free = function() {
 		chil[i].free();
 
 	if (parent)
-		parent.del(This);
+		parent.del(this);
 
-	for ( var n in This.events)
-		This.off(n);
+	for ( var n in this.events)
+		this.off(n);
 
-	This.events = {};
+	this.events = {};
 	delete this;
 }
 
@@ -417,8 +415,7 @@ ArquesElement.prototype.free = function() {
 
 Object.defineProperty(ArquesElement.prototype, 'count', {
 	get : function() {
-		var This = this;
-		return This._children.length;
+		return this._children.length;
 	},
 
 	set : function(v) {
@@ -442,18 +439,16 @@ Object.defineProperty(ArquesElement.prototype, 'count', {
 */
 
 ArquesElement.prototype.add = function(v) {
-	var This = this;
-
 	if (v == undefined || v == null)
 		return;
 
 	if (ar.isE(v)) {
-		This[0].appendChild(v[0]);
-		This._children.push(v);
+		this[0].appendChild(v[0]);
+		this._children.push(v);
 	}
 	else {
-		This[0].appendChild(v);
-		This._children.push(E(v));
+		this[0].appendChild(v);
+		this._children.push(E(v));
 	}
 }
 
@@ -465,18 +460,16 @@ ArquesElement.prototype.add = function(v) {
 */
 
 ArquesElement.prototype.insert = function(i, obj) {
-	var This = this;
-
 	if (obj == undefined || obj == null)
 		return;
 
 	if (ar.isE(obj)) {
-		This[0].insertBefore(obj[0], 0 <= i && i < This[0].children.length ? This[0].children[i] : null);
-		This._children.splice(i, 0, obj);
+		this[0].insertBefore(obj[0], 0 <= i && i < this[0].children.length ? this[0].children[i] : null);
+		this._children.splice(i, 0, obj);
 	}
 	else {
-		This[0].insertBefore(obj, 0 <= i && i < This[0].children.length ? This[0].children[i] : null);
-		This._children.splice(i, 0, E(obj));
+		this[0].insertBefore(obj, 0 <= i && i < this[0].children.length ? this[0].children[i] : null);
+		this._children.splice(i, 0, E(obj));
 	}
 }
 
@@ -487,48 +480,46 @@ ArquesElement.prototype.insert = function(i, obj) {
 */
 
 ArquesElement.prototype.del = function(v) {
-	var This = this;
-
 	if (v == undefined)
 		return;
 
 	if (ar.isE(v)) {
-		for (var i = This._children.length - 1; i >= 0; i--)
-			if (This._children[i] == v) {
-				This._children.splice(i, 1);
+		for (var i = this._children.length - 1; i >= 0; i--)
+			if (this._children[i] == v) {
+				this._children.splice(i, 1);
 				break;
 			}
 
-		for (var i = 0; i < This.length; i++)
+		for (var i = 0; i < this.length; i++)
 			for (var j = 0; j < v.length; j++)
-				if (This[i].contains(v[j]))
-					This[i].removeChild(v[j]);
+				if (this[i].contains(v[j]))
+					this[i].removeChild(v[j]);
 	}
 	else if (isNaN(v) == false) {
 		v = parseInt(v);
-		if (This[0] && v < This[0].children.length) {
-			v = This._children.splice(v, 1);
+		if (this[0] && v < this[0].children.length) {
+			v = this._children.splice(v, 1);
 
 			for (var k = 0; k < v.length; k++) {
 				var e = v[k];
 
-				for (var i = 0; i < This.length; i++)
+				for (var i = 0; i < this.length; i++)
 					for (var j = 0; j < e.length; j++)
-						if (This[i].contains(e[j]))
-							This[i].removeChild(e[j]);
+						if (this[i].contains(e[j]))
+							this[i].removeChild(e[j]);
 			}
 		}
 	}
 	else if (v) {
-		for (var i = This._children.length - 1; i >= 0; i--)
-			if (This._children[i][0] == v) {
-				This._children.splice(i, 1);
+		for (var i = this._children.length - 1; i >= 0; i--)
+			if (this._children[i][0] == v) {
+				this._children.splice(i, 1);
 				break;
 			}
 
-		for (var i = 0; i < This.length; i++)
-			if (This[i].contains(v))
-				This[i].removeChild(v);
+		for (var i = 0; i < this.length; i++)
+			if (this[i].contains(v))
+				this[i].removeChild(v);
 	}
 }
 
@@ -538,18 +529,16 @@ ArquesElement.prototype.del = function(v) {
  */
 
 ArquesElement.prototype.clear = function() {
-	var This = this;
+	for (var j = this.count - 1; j >= 0; j--) {
+		var v = this._children[j];
 
-	for (var j = This.count - 1; j >= 0; j--) {
-		var v = This._children[j];
-
-		for (var i = 0; i < This.length; i++)
+		for (var i = 0; i < this.length; i++)
 			for (var k = 0; k < v.length; k++)
-				if (This[i].contains(v[k]))
-					This[i].removeChild(v[k]);
+				if (this[i].contains(v[k]))
+					this[i].removeChild(v[k]);
 	}
 
-	This._children = [];
+	this._children = [];
 }
 
 /**
@@ -558,10 +547,8 @@ ArquesElement.prototype.clear = function() {
  */
 
 ArquesElement.prototype.indexOf = function(e) {
-	var This = this;
-
-	for (var j = This.count - 1; j >= 0; j--) {
-		if (This._children[j] == e)
+	for (var j = this.count - 1; j >= 0; j--) {
+		if (this._children[j] == e)
 			return j;
 	}
 
@@ -576,20 +563,17 @@ ArquesElement.prototype.indexOf = function(e) {
 
 Object.defineProperty(ArquesElement.prototype, 'first', {
 	get : function() {
-		var This = this;
-		if (This._children.length == 0)
+		if (this._children.length == 0)
 			return null;
 
-		var This = this;
-		return This._children[0];
+		return this._children[0];
 	},
 
 	set : function(v) {
-		var This = this;
-		if (This._children.length == 0)
-			This._children.push(v);
+		if (this._children.length == 0)
+			this._children.push(v);
 		else
-			This._children[0] = v;
+			this._children[0] = v;
 	}
 });
 
@@ -601,20 +585,17 @@ Object.defineProperty(ArquesElement.prototype, 'first', {
 
 Object.defineProperty(ArquesElement.prototype, 'last', {
 	get : function() {
-		var This = this;
-		if (This._children.length == 0)
+		if (this._children.length == 0)
 			return null;
 
-		var This = this;
-		return This._children[This._children.length - 1];
+		return this._children[this._children.length - 1];
 	},
 
 	set : function(v) {
-		var This = this;
-		if (This._children.length == 0)
-			This._children.push(v);
+		if (this._children.length == 0)
+			this._children.push(v);
 		else
-			This._children[This._children.length - 1] = v;
+			this._children[this._children.length - 1] = v;
 	}
 });
 
@@ -626,20 +607,17 @@ Object.defineProperty(ArquesElement.prototype, 'last', {
 
 Object.defineProperty(ArquesElement.prototype, 'parent', {
 	get : function() {
-		var This = this;
-		if (This.length > 0 && This[0].parentNode && This[0].parentNode != document) {
-			return E(This[0].parentNode);
+		if (this.length > 0 && this[0].parentNode && this[0].parentNode != document) {
+			return E(this[0].parentNode);
 		}
 
 		return null;
 	},
 
 	set : function(v) {
-		var This = this;
-
-		for (var i = 0; i < This.length; i++)
-			if (This[i].parentNode)
-				This[i].parentNode.removeChild(This[i]);
+		for (var i = 0; i < this.length; i++)
+			if (this[i].parentNode)
+				this[i].parentNode.removeChild(this[i]);
 
 		if (ar.isE(v)) {
 			if (v.length == 0) {
@@ -650,10 +628,10 @@ Object.defineProperty(ArquesElement.prototype, 'parent', {
 			v = v[0];
 		}
 
-		for (var i = 0; i < This.length; i++)
-			This[i].parentNode = v;
+		for (var i = 0; i < this.length; i++)
+			this[i].parentNode = v;
 
-		return This.parent;
+		return this.parent;
 	}
 });
 
@@ -665,13 +643,10 @@ Object.defineProperty(ArquesElement.prototype, 'parent', {
 
 Object.defineProperty(ArquesElement.prototype, 'children', {
 	get : function() {
-		var This = this;
-		return This._children;
+		return this._children;
 	},
 
 	set : function(v) {
-		var This = this;
-
 		if (Array.isArray(v)) {
 			for (var i = 0; i < v.length; i++)
 				if (!ar.isE(v)) {
@@ -679,11 +654,11 @@ Object.defineProperty(ArquesElement.prototype, 'children', {
 					return;
 				}
 
-			for (var i = This.count - 1; i >= 0; i--)
-				This.del(This._children[i]);
+			for (var i = this.count - 1; i >= 0; i--)
+				this.del(this._children[i]);
 
 			for (var i = 0; i < v.length; i++)
-				This.add(v[i]);
+				this.add(v[i]);
 		}
 		else {
 			ar.log("you're setting invalide children. Children must have an array of arques object.");
@@ -692,8 +667,7 @@ Object.defineProperty(ArquesElement.prototype, 'children', {
 });
 
 ArquesElement.prototype.child = function(i) {
-	var This = this;
-	return This._children[i];
+	return this._children[i];
 }
 
 /**
@@ -719,14 +693,12 @@ ArquesElement.prototype.child = function(i) {
  */
 
 ArquesElement.prototype.E = function(id) {
-	var This = this;
-
-	for (var i = 0; i < This.length; i++) {
+	for (var i = 0; i < this.length; i++) {
 		var autoId = ar.isPrefix(id, '.') ? id : '#' + id;
-		var e = This[i].querySelectorAll(autoId);
+		var e = this[i].querySelectorAll(autoId);
 
 		if (e.length == 0)
-			e = This[i].querySelectorAll(id);
+			e = this[i].querySelectorAll(id);
 
 		if (e.length == 0)
 			continue;
@@ -972,8 +944,7 @@ Object.defineProperty(ArquesElement.prototype, 'w', {
 	},
 
 	set : function(v) {
-		var This = this;
-		var r = This.style({
+		var r = this.style({
 			field : 'width',
 			value : v,
 			isUsePxUnit : true,
@@ -981,8 +952,8 @@ Object.defineProperty(ArquesElement.prototype, 'w', {
 			returnType : 'int',
 		});
 		
-		if (This._onSetW)
-			This._onSetW(r);
+		if (this._onSetW)
+			this._onSetW(r);
 
 		return r;
 	}
@@ -1008,8 +979,7 @@ Object.defineProperty(ArquesElement.prototype, 'h', {
 	set : function(v) {
 		//ar.log(v);
 		
-		var This = this;
-		var r = This.style({
+		var r = this.style({
 			field : 'height',
 			value : v,
 			isUsePxUnit : true,
@@ -1017,8 +987,8 @@ Object.defineProperty(ArquesElement.prototype, 'h', {
 			returnType : 'int',
 		});
 
-		if (This._onSetH)
-			This._onSetH(r);
+		if (this._onSetH)
+			this._onSetH(r);
 
 		return r;
 	}
@@ -1066,34 +1036,58 @@ Object.defineProperty(ArquesElement.prototype, 't', {
 /**
  * @member {integer} r
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] right (= x + w - 1)
+ * @desc [Get/Set] css right.
  */
 
 Object.defineProperty(ArquesElement.prototype, 'r', {
 	get : function() {
-		return this.x + this.w - 1;
+		var r = this.style({
+			field : 'right',
+			isUsePxUnit : true,
+			isToUseClientRect : true,
+			returnType : 'int',
+		});
+		return r;
 	},
 
 	set : function(v) {
-		this.x = v - this.w + 1;
-		return this.x + this.w - 1;
+		var r = this.style({
+			field : 'right',
+			value : v,
+			isUsePxUnit : true,
+			isToUseClientRect : true,
+			returnType : 'int',
+		});
+		return r;
 	}
 });
 
 /**
  * @member {integer} b
  * @memberOf ArquesElement.prototype
- * @desc [Get/Set] bottom (= y + h - 1).
+ * @desc [Get/Set] css bottom.
  */
 
 Object.defineProperty(ArquesElement.prototype, 'b', {
 	get : function() {
-		return this.y + this.h - 1;
+		var r = this.style({
+			field : 'bottom',
+			isUsePxUnit : true,
+			isToUseClientRect : true,
+			returnType : 'int',
+		});
+		return r;
 	},
 
 	set : function(v) {
-		this.y = v - this.h + 1;
-		return this.y + this.h - 1;
+		var r = this.style({
+			field : 'bottom',
+			value : v,
+			isUsePxUnit : true,
+			isToUseClientRect : true,
+			returnType : 'int',
+		});
+		return r;
 	}
 });
 
@@ -1568,14 +1562,12 @@ ArquesElement.prototype.toDegIfRad = function(v) {
 
 Object.defineProperty(ArquesElement.prototype, 'angleUnit', {
 	get : function() {
-		var This = this;
-		return This._angleUnit;
+		return this._angleUnit;
 	},
 
 	set : function(v) {
-		var This = this;
-		This._angleUnit = v;
-		return This._angleUnit;
+		this._angleUnit = v;
+		return this._angleUnit;
 	}
 });
 
@@ -2216,6 +2208,168 @@ Object.defineProperty(ArquesElement.prototype, 'pb', {
 	}
 });
 
+/**
+ * @member {integer|string} border
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border.
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'border', {
+	get : function() {
+		var r = this.style({
+			field : 'border',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'border',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {integer|string} bdl
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border left (border(bd) + left(l)).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdl', {
+	get : function() {
+		var r = this.style({
+			field : 'borderLeft',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderLeft',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {integer|string} bdt
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border top (border(bd) + top(t)).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdt', {
+	get : function() {
+		var r = this.style({
+			field : 'borderTop',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderTop',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {integer|string} bdr
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border right (border(bd) + right(r)).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdr', {
+	get : function() {
+		var r = this.style({
+			field : 'borderRight',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderRight',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {integer|string} bdb
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] border bottom (border(bd) + bottom(b)).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'bdb', {
+	get : function() {
+		var r = this.style({
+			field : 'borderBottom',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'borderBottom',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
+/**
+ * @member {integer|string} lh
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] line height (line(l) + height(h)).
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'lh', {
+	get : function() {
+		var r = this.style({
+			field : 'lineHeight',
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	},
+
+	set : function(v) {
+		var r = this.style({
+			field : 'lineHeight',
+			value : v,
+			isUsePxUnit : false,
+			returnType : '',
+		});
+		return r;
+	}
+});
+
 //
 //
 //
@@ -2233,14 +2387,14 @@ Object.defineProperty(ArquesElement.prototype, 'pb', {
 
 Object.defineProperty(ArquesElement.prototype, 'sl', {
 	get : function() {
-		if (This._isWindow)
+		if (this._isWindow)
 			return window.scrollX;
 		
 		return this[0] ? this[0].scrollLeft : 0;
 	},
 
 	set : function(v) {
-		if (This._isWindow) {
+		if (this._isWindow) {
 			ar.log('window.scrollX is read only.');
 			return this.sl;
 		}
@@ -2261,14 +2415,14 @@ Object.defineProperty(ArquesElement.prototype, 'sl', {
 
 Object.defineProperty(ArquesElement.prototype, 'st', {
 	get : function() {
-		if (This._isWindow)
+		if (this._isWindow)
 			return window.scrollY;
 		
 		return this[0] ? this[0].scrollTop : 0;
 	},
 
 	set : function(v) {
-		if (This._isWindow) {
+		if (this._isWindow) {
 			ar.log('window.scrollY is read only.');
 			return this.st;
 		}
@@ -3286,24 +3440,22 @@ Object.defineProperty(ArquesElement.prototype, 'tag', {
  */
 
 ArquesElement.prototype.on = function(name, cb, isUseNative) {
-	var This = this;
-
 	if (cb) {
-		This.events[name] = cb;
+		this.events[name] = cb;
 
-		for (var i = 0; i < This.length; i++) {
+		for (var i = 0; i < this.length; i++) {
 			if (isUseNative) {
-				if (This._isWindow)
+				if (this._isWindow)
 					window.addEventListener(name, cb);
 				else
-					This[i].addEventListener(name, cb);
+					this[i].addEventListener(name, cb);
 			}
 			else
-				ar.on(This[i], name, cb);
+				ar.on(this[i], name, cb);
 		}
 	}
-	else if (This.events[name])
-		This.events[name]();
+	else if (this.events[name])
+		this.events[name]();
 }
 
 /**
@@ -3315,20 +3467,18 @@ ArquesElement.prototype.on = function(name, cb, isUseNative) {
  */
 
 ArquesElement.prototype.off = function(name, cb, isUseNative) {
-	var This = this;
-
-	for (var i = 0; i < This.length; i++) {
+	for (var i = 0; i < this.length; i++) {
 		if (isUseNative) {
-			if (This._isWindow)
+			if (this._isWindow)
 				window.removeEventListener(name, cb);
 			else
-				This[i].removeEventListener(name, cb);
+				this[i].removeEventListener(name, cb);
 		}
 		else
-			ar.off(This[i], name, This.events[name]);
+			ar.off(this[i], name, this.events[name]);
 	}
 
-	delete This.events[name];
+	delete this.events[name];
 }
 
 //
@@ -3380,6 +3530,25 @@ ArquesElement.prototype.isEnabled = function() {
 	return this._isEnabled;
 }
 
+/**
+ * @member {boolean} enabled
+ * @memberOf ArquesElement.prototype
+ * @desc [Get/Set] enabled.
+ * @readonly
+ */
+
+Object.defineProperty(ArquesElement.prototype, 'enabled', {
+	get : function() {
+		return this._isEnabled;
+	},
+
+	set : function(v) {
+		this._isEnabled = v;
+		return this._isEnabled;
+	}
+});
+
+
 //
 // Animation
 // 
@@ -3392,9 +3561,8 @@ ArquesElement.prototype.isEnabled = function() {
  */
 
 ArquesElement.prototype.ani = function(name, cb) {
-	var This = this;
 	ar.ani({
-		obj : This,
+		obj : this,
 		name : name,
 		cb : cb,
 	});

@@ -15,13 +15,16 @@ Radio = function(id) {
 	return a;
 }
 
+Radio._objIndex = 0;
+
 ArquesRadiobox = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Radio._objIndex++;
 
 	This.scope = Scope(This[0]);
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_radio_' + Radio._objIndex;
 	This._index = This.attr('index') ? parseInt(This.attr('index')) : 0;
 	This._radio_size = This.attr('radio-size') ? This.attr('radio-size') : 25;
 	This._radio_color = This.attr('radio-color') ? This.attr('radio-color') : 'black';
@@ -95,7 +98,7 @@ ArquesRadiobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 
 			for (var i = 0; i < This._radios.length; i++) {
@@ -114,7 +117,7 @@ ArquesRadiobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = true;
 			This.cursor = 'pointer';
@@ -126,7 +129,7 @@ ArquesRadiobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';

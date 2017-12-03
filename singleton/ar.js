@@ -109,6 +109,105 @@ ar.logCS = function() { // http://stackoverflow.com/questions/4671031/print-func
 	console.log('===================================');
 }
 
+// https://stackoverflow.com/questions/20256760/javascript-console-log-to-html
+
+ar._logbox = document.createElement('div');
+ar._logbox.style.position = 'absolute';
+ar._logbox.style.zIndex = 1000000;
+ar._logbox.style.display = 'none';
+ar._logbox.style.backgroundColor = 'rgba(0,0,0,0.5)';
+ar._logbox.style.color = 'white';
+ar._logbox.style.border = '1px solid #777';
+ar._logbox.style.top = '10px';
+ar._logbox.style.right = '10px';
+ar._logbox.style.width = '600px';
+ar._logbox.style.height = '400px';
+ar._logbox.style.fontSize = '12px';
+ar._logbox.style.padding = '3px';
+
+console.oldlog = console.log;
+console.log = function() {
+	if (ar.logbox.enabled == false) {
+		console.oldlog.apply(undefined, arguments);
+		return;
+	}
+
+	var output = "";
+
+	for (var i = 0; i < arguments.length; i++) {
+		var arg = arguments[i];
+		output += "<span style='color:white;'>";
+
+		if (typeof arg === "object" && typeof JSON === "object" && typeof JSON.stringify === "function")
+			output += JSON.stringify(arg);
+		else
+			output += arg;
+
+		output += "\n</span>";
+	}
+
+	ar.logbox.out.html += output + "<br>";
+	console.oldlog.apply(undefined, arguments);
+};
+
+console.oldwarn = console.warn;
+console.warn = function() {
+	if (ar.logbox.enabled == false) {
+		console.oldwarn.apply(undefined, arguments);
+		return;
+	}
+
+	var output = "";
+
+	for (var i = 0; i < arguments.length; i++) {
+		var arg = arguments[i];
+		output += "<span style='color:yellow;'>";
+
+		if (typeof arg === "object" && typeof JSON === "object" && typeof JSON.stringify === "function")
+			output += JSON.stringify(arg);
+		else
+			output += arg;
+
+		output += "\n</span>";
+	}
+
+	ar.logbox.out.html += output + "<br>";
+	console.oldwarn.apply(undefined, arguments);
+};
+
+console.olderr = console.error;
+console.error = function() {
+	if (ar.logbox.enabled == false) {
+		console.olderror.apply(undefined, arguments);
+		return;
+	}
+
+	var output = "";
+
+	for (var i = 0; i < arguments.length; i++) {
+		var arg = arguments[i];
+		output += "<span style='color:red;'>";
+
+		if (typeof arg === "object" && typeof JSON === "object" && typeof JSON.stringify === "function")
+			output += JSON.stringify(arg);
+		else
+			output += arg;
+
+		output += "\n</span>";
+	}
+
+	ar.logbox.out.html += output + "<br>";
+	console.olderr.apply(undefined, arguments);
+};
+
+window.addEventListener('error', function(err) {
+	ar.log(err.filename + ':' + err.lineno + ':' + err.colno + ':' + err.message);
+});
+
+window.onerror = function(msg, url, line) {
+	ar.log(url + ':' + line + ':' + msg);
+};
+
 /**
  * @func osVer
  * @memberOf ar
@@ -633,14 +732,50 @@ ar.init = function() {
 					link.media = 'all';
 					head.appendChild(link);
 				}
-				
+
 				ar._isInited = true;
 				ar.scope.div = document.body;
 				ar.compile({
 					scope : ar.scope,
 					root : document.body,
 					cb : function() {
+						document.body.appendChild(ar._logbox);
+						ar.logbox = E(ar._logbox);
+						ar.logbox.enabled = false;
+						ar.logbox[0].style.boxSizing = 'content-box';
+						ar.logbox.btn = Button('<div text="Copy"></div>');
+						ar.logbox.btn.w = 80;
+						ar.logbox.btn.h = 30;
+						ar.logbox.btn.mb = 5;
+						ar.logbox.btn.bc = '#eee';
+						ar.logbox.btn.fc = 'black';
+						ar.logbox.btn.border = '1px solid #ccf';
+						ar.logbox.btn.onClick = function() {
+							window.getSelection().selectAllChildren(ar.logbox.out[0]);
+							document.execCommand("Copy");
+
+							if (document.selection)
+								document.selection.empty();
+							else if (window.getSelection)
+								window.getSelection().removeAllRanges();
+
+							ar.dlg.toast({
+								msg : 'Log has been copied'
+							});
+						};
+						ar.logbox.out = E('<div></div>');
+						ar.logbox.out.padding = 10;
+						ar.logbox.out.bc = 'rgba(0,0,0,0.5)';
+						ar.logbox.out.w = 'calc(100% - 20px)';
+						ar.logbox.out.h = 'calc(100% - 30px - 20px - 5px)';
+						ar.logbox.out.lh = '16px';
+						ar.logbox.out.oy = 'scroll';
+						ar.logbox.out[0].style.boxSizing = 'content-box';
+						ar.logbox.add(ar.logbox.btn);
+						ar.logbox.add(ar.logbox.out);
+
 						Scope.broadcast('inited');
+
 						ar.run(100, function() {
 							Scope.broadcast('size');
 							ar.onScroll();
@@ -925,7 +1060,7 @@ Object.defineProperty(ar, 'clickTime', {
 ar.on = function(ele, name, handler) {
 	if (ArquesElement.prototype.isPrototypeOf(ele))
 		ele = ele[0];
-	
+
 	if (typeof ele == 'string') {
 		Scope.broadcast(ele);
 		return;
@@ -1138,7 +1273,7 @@ ar.click = function(scope, ele, opt) {
 
 		if (!opt['click-keep-bc'])
 			ele.style.backgroundColor = ele.__prev_color__;
-		
+
 		isClickable = false;
 		return true;
 	};

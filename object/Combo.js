@@ -16,13 +16,16 @@ Combo = function(id) {
 	return a;
 }
 
+Combo._objIndex = 0;
+
 ArquesCombobox = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Combo._objIndex++;
 
 	This.scope = Scope(This[0]);
-	This._id = id;
+	This._id = This.attr('id') ? This.attr('id') : '__arques_combo_' + Combo._objIndex;
 	This._index = This.attr('index') ? parseInt(This.attr('index')) : 0;
 	This._combo_size = This.attr('combo-size') ? This.attr('combo-size') : 25;
 	This._combo_color = This.attr('combo-color') ? This.attr('combo-color') : 'black';
@@ -96,7 +99,7 @@ ArquesCombobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 
 			for (var i = 0; i < This._combos.length; i++) {
@@ -115,7 +118,7 @@ ArquesCombobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = true;
 			This.cursor = 'pointer';
@@ -127,7 +130,7 @@ ArquesCombobox.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 			This._isEnabled = false;
 			This.cursor = 'inherit';

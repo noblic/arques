@@ -51,6 +51,7 @@ Split = function(id, opt) {
 	return con;
 }
 
+Split._objIndex = 0;
 Split.splitIds = 0;
 Split.splits = [];
 
@@ -62,10 +63,11 @@ ArquesSplitter = function(id, link1, link2, opt) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Split._objIndex++;
 
 	Split.splits.push(This);
 	This.scope = Scope(This[0]);
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_splitter_' + Split._objIndex;
 	This._type = opt;
 	This.onChanged = null;
 	This.isHorz = true;
@@ -282,7 +284,7 @@ ArquesSplitter.prototype = Object.create(ArquesElement.prototype, {
 		enumerable : true,
 		configurable : true,
 		writable : true,
-		value : function(id) {
+		value : function() {
 			var This = this;
 		}
 	},

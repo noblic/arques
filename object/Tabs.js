@@ -12,6 +12,8 @@ Tabs = function(id) {
 	return a;
 }
 
+Tabs._objIndex = 0;
+
 //
 // ArquesTabs
 //
@@ -20,10 +22,11 @@ ArquesTabs = function(id) {
 	var This = this;
 
 	ArquesElement.call(This, id);
+	Tabs._objIndex++;
 
 	This.scope = Scope(This[0]);
 	This.scanAll();
-	This._id = This.attr('id');
+	This._id = This.attr('id') ? This.attr('id') : '__arques_tabs_' + Tabs._objIndex;
 	This._index = 0;
 	This.onChanged = null;
 
