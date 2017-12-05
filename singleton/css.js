@@ -775,7 +775,7 @@ ar.css.init = function() {
 	
 	ar.css._css_ += '.ar-split-box { white-space:nowrap;overflow:hidden; }';
 	ar.css._css_ += '.ar-split-bar { background-color:#ddd; box-shadow:inset 0px 0px 0px 1px #bbb; }';
-	ar.css._css_ += '.ar-split-col { display:inline-block;height:100%;overflow:hidden; }';
+	ar.css._css_ += '.ar-split-col { display:inline-block;height:100%;overflow:hidden;vertical-align:top; }';
 	ar.css._css_ += '.ar-split-row { width:100%;overflow:hidden; }';
 
 	//Etc for Convenient
