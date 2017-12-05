@@ -11624,7 +11624,7 @@ console.warn = function() {
 console.olderr = console.error;
 console.error = function() {
 	if (!ar.logbox || ar.logbox.enabled == false) {
-		console.olderror.apply(undefined, arguments);
+		console.olderr.apply(undefined, arguments);
 		return;
 	}
 
