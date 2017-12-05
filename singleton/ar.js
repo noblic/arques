@@ -127,7 +127,7 @@ ar._logbox.style.padding = '3px';
 
 console.oldlog = console.log;
 console.log = function() {
-	if (ar.logbox.enabled == false) {
+	if (!ar.logbox || ar.logbox.enabled == false) {
 		console.oldlog.apply(undefined, arguments);
 		return;
 	}
@@ -152,7 +152,7 @@ console.log = function() {
 
 console.oldwarn = console.warn;
 console.warn = function() {
-	if (ar.logbox.enabled == false) {
+	if (!ar.logbox || ar.logbox.enabled == false) {
 		console.oldwarn.apply(undefined, arguments);
 		return;
 	}
@@ -177,7 +177,7 @@ console.warn = function() {
 
 console.olderr = console.error;
 console.error = function() {
-	if (ar.logbox.enabled == false) {
+	if (!ar.logbox || ar.logbox.enabled == false) {
 		console.olderror.apply(undefined, arguments);
 		return;
 	}
